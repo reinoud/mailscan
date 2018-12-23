@@ -16,7 +16,7 @@ def main():
 
 def executor(conf): 
     print(conf)
-    s.enter(3, 1, executor, (conf,))
+    s.enter(conf['pollInterval'], 1, executor, (conf,))
 
 if __name__ == '__main__':
     main()
