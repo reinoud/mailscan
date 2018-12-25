@@ -2,6 +2,7 @@ import threading
 import sched, time
 from .config import get_config
 from .util import error
+from .fetcher import fetch_attachements
 
 s = sched.scheduler(time.time, time.sleep)
 
@@ -15,7 +16,7 @@ def main():
     s.run()
 
 def executor(conf): 
-    print(conf)
+    print(fetch_attachements(conf))
     s.enter(conf['pollInterval'], 1, executor, (conf,))
 
 if __name__ == '__main__':

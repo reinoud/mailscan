@@ -12,6 +12,18 @@ def get_config() -> dict:
     if 'pollInterval' not in parsed:
         raise Exception("Key 'pollInterval' not found in config.")
 
+    if 'imap' not in parsed:
+        raise Exception("Key 'imap' not found in config.")
+    
+    if 'host' not in parsed['imap']:
+        raise Exception("Key 'imap.host' not found in config.")
+
+    if 'user' not in parsed['imap']:
+        raise Exception("Key 'imap.user' not found in config.")
+
+    if 'password' not in parsed['imap']:
+        raise Exception("Key 'imap.password' not found in config.")
+
     return parsed
 
 def _get_file_content() -> str:
