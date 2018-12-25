@@ -24,6 +24,21 @@ def get_config() -> dict:
     if 'password' not in parsed['imap']:
         raise Exception("Key 'imap.password' not found in config.")
 
+    if 'folder' not in parsed['imap']:
+        raise Exception("Key 'imap.folder' not found in config.")
+
+    if 'webdav' not in parsed:
+        raise Exception("Key 'webdav' not found in config.")
+
+    if 'url' not in parsed['webdav']:
+        raise Exception("Key 'webdav.url' not found in config.")
+
+    if 'username' not in parsed['webdav']:
+        raise Exception("Key 'webdav.username' not found in config.")
+
+    if 'password' not in parsed['webdav']:
+        raise Exception("Key 'webdav.password' not found in config.")
+
     return parsed
 
 def _get_file_content() -> str:

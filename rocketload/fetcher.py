@@ -21,11 +21,12 @@ def _fetch_mails(conf: dict) -> list:
     imap_host = conf['imap']['host']
     imap_user = conf['imap']['user']
     imap_pass = conf['imap']['password']
+    imap_folder = conf['imap']['folder']
 
     try:
         imap = IMAP4_SSL(imap_host) # connect to server
         imap.login(imap_user, imap_pass)
-        imap.select('test_rocketload')
+        imap.select(imap_folder)
         _, data = imap.search(None, 'All') # Search all mails
 
         emails = []
