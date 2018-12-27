@@ -11,7 +11,8 @@ COPY setup.py .
 RUN apk add --no-cache build-base \
     && pip install -r requirements.txt \
     && pip install . \
+    && ln -s $(which rocketload) rocketload-executable \
     # Uninstall build-base for image size
     && apk del build-base
 
-CMD "rocketload"
+CMD python -u rocketload-executable
