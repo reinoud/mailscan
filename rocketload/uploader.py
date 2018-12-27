@@ -17,8 +17,10 @@ def upload(conf: dict, attachements: dict) -> None:
             file = open(att['path'])
 
             # Upload file
-            requests.put(url=finalUrl, data=file, auth=auth)
+            resp = requests.put(url=finalUrl, data=file, auth=auth)
 
+            if not resp.ok:
+                error("HTTP Failure while uploading files to WebDav server: HTTP Status Code %i" % resp.status_code)
 
             # Clean file
             try:
