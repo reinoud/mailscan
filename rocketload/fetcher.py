@@ -15,6 +15,7 @@ def fetch_attachements(conf: dict) -> list:
         for att in attachements:
             att_files += _get_attachement_files(att)
     
+    print("Successfully fetched %i attachements" % len(att_files))
     return att_files
 
 def _fetch_mails(conf: dict) -> list:
@@ -27,7 +28,7 @@ def _fetch_mails(conf: dict) -> list:
         imap = IMAP4_SSL(imap_host) # connect to server
         imap.login(imap_user, imap_pass)
         imap.select(imap_folder)
-        _, data = imap.search(None, 'All') # Search all mails
+        _, data = imap.search(None, '(UNSEEN)') # Search all mails
 
         emails = []
 
