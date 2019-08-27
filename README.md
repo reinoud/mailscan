@@ -51,6 +51,7 @@ The configuration cosist of a JSON file called `rocketload.json`. It has followi
 **`imap.user`**: IMAP username  
 **`imap.password`**: IMAP password  
 **`imap.folder`**: The IMAP folder to look for mails in  
+**`imap.deletefetched`**: Remove fetched mails from mailbox (useful when you have a dedicated mailbox)
 
 
 **`webdav`**: WebDav configuration  
@@ -67,7 +68,8 @@ Example of full configuration:
         "host": "imap.gmail.com",
         "user": "john.doe@gmail.com",
         "password": "secretpassword",
-	    "folder": "rocketload_mails"
+	    "folder": "rocketload_mails",
+        "deletefetched": true
     },
     "webdav": {
         "url": "https://my.webdav.server/mydata/rocketload/uploads",

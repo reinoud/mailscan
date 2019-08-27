@@ -23,6 +23,7 @@ def _fetch_mails(conf: dict) -> list:
     imap_user = conf['imap']['user']
     imap_pass = conf['imap']['password']
     imap_folder = conf['imap']['folder']
+    imap_deletefetched = conf['imap']['deletefetched']
 
     try:
         imap = IMAP4_SSL(imap_host) # connect to server
@@ -36,7 +37,12 @@ def _fetch_mails(conf: dict) -> list:
             _, maildata = imap.fetch(emailid, '(RFC822)')
             email_body = maildata[0][1]
             emails.append(email.message_from_bytes(email_body))
-            
+            if imap_deletefetched:
+                imap.store(emailid, '+FLAGS', '\\Deleted')
+                print('deleted email after fetching')
+
+        if imap_deletefetched:
+            imap.expunge()
         imap.close()
         imap.logout()
         

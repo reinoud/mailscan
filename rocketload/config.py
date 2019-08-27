@@ -27,6 +27,10 @@ def get_config() -> dict:
     if 'folder' not in parsed['imap']:
         raise Exception("Key 'imap.folder' not found in config.")
 
+    if 'deletefetched' not in parsed['imap']:
+        print(parsed)
+        raise Exception("Key 'imap.deletefetched' not found in config.")
+
     if 'webdav' not in parsed:
         raise Exception("Key 'webdav' not found in config.")
 
