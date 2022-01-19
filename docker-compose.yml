@@ -1,0 +1,24 @@
+version: '3.5'
+
+services:
+  mailscan:
+    restart: always
+    image: mailscan
+    volumes:
+      - ./mailscan.json:/mailscan.json
+    networks:
+      - ocr-network
+
+  ocrmypdf:
+    restart: always
+    container_name: ocrmypdf-webservice
+    image: jbarlow83/ocrmypdf
+    networks:
+      - ocr-network
+    ports:
+      - "5000:5000"
+    entrypoint: python3
+    command: webservice.py
+
+networks:
+  ocr-network:

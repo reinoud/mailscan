@@ -1,48 +1,26 @@
-# Rocketload
+# Mailscan
 
-Rocketload is a simple and dockerized commandline application written in python. The goal of this application is it to download attachements of an IMAP email account and upload them on to a WebDav server. This application was developed to solve the problem that it is currently not possible to upload [Rocketbook](https://getrocketbook.co.uk/) files to a WebDav server. It is possible to send Files to an email address though. So rocketload can be used to upload Rocketbook Files to a WebDav server. Although rocketload was developed for this particular use-case it can be used for non-Rocketbook use-cases.
+Mailscan is an application built with 2 Dockers to automate ocr-ing pdfs (presumably sent by your scanner by mail to a dedicated mailbox), and uploading them to a webdav server (like Nextcloud).
 
+Basically it is a combination of [Rocketload](https://gitlab.com/aagreb/rocketload/-/tree/master/rocketload), extended with a module to send files to a [ocrmypdf](https://github.com/ocrmypdf/OCRmyPDF) docker to ocr them. After this, the file is uploaded to a webdav server.
+
+The purpose of this is to automate scanning paper mail: the scanner has an email address in the adresbook that where the (pdf) scans are sent. 
+The application fetches mail from this addres (and deletes them), and uploads the ocr'ed scans to a webdavserver, so they can be indexed.
 ## Installation
 
-It is possible to run rocketload without [Docker](https://www.docker.com/). This is not recommended and not supported though. So this installation guide requires you to have docker installed. You don't have to build the docker image yourself. You can use the prebuilt images from [Dockerhub](https://hub.docker.com/r/aagreb/rocketload).
+On a machine that has a recent version of Docker installed (including docker compose):
+- copy the `docker-compose.yml` file in a directory
+- copy the `mailscan.json.example` file, and rename it to `mailscan.json`
+- edit the `mailscan.json` file 
+- start the proces with `docker-compose up`
+- you can make it a systemd service
 
-### Preparation
+Note: this can be any machine, as long as it can reach the mailbox and the webdav server.
 
-Create a new directory where all rocketload stuff shall be stored.
-
-```bash
-mkdir rocketload
-```
-
-Change into the directory
-
-```bash
-cd rocketload
-```
-
-Create empty config file. Rocketload configuration is discussed later.
-
-```bash
-touch rocketload.json
-```
-
-Create `docker-compose.yml` with following contents:
-
-```yml
-version: '3.5'
-
-services:
-    rocketload:
-        restart: always
-        image: aagreb/rocketload
-        volumes:
-            - ./rocketload.json:/rocketload.json
-
-```
 
 ### Configuration
 
-The configuration cosist of a JSON file called `rocketload.json`. It has following keys:
+The configuration cosist of a JSON file called `mailscan.json`. It has following keys:
 
 **`pollInterval`**: How many seconds between every poll to the email server
 
@@ -59,6 +37,12 @@ The configuration cosist of a JSON file called `rocketload.json`. It has followi
 **`webdav.username`**: WebDav username  
 **`webdav.password`**: WebDav password  
 
+**`ocr`**: ocr configuration  
+**`ocr.containername`**: name of the service in `docker-compose.yml`  
+**`ocr.containerport`**: port of the service in `docker-compose.yml`
+**`ocr.scanname`**: static name from your scanner; this will be converted to a name with a timestamp
+
+
 Example of full configuration:
 
 ```json
@@ -72,17 +56,19 @@ Example of full configuration:
         "deletefetched": true
     },
     "webdav": {
-        "url": "https://my.webdav.server/mydata/rocketload/uploads",
+        "url": "https://my.webdav.server/mydata/mailscan/uploads",
         "username": "john",
         "password": "passwordSecret"
-    }
+    },
+    "ocr": {
+        "containername": "ocrmypdf-webservice",
+        "containerport": 5000,
+        "scanname": "scan.pdf"
+  }
 }
 
 ```
 
-### Running
-
-Now you can run rocketload with `docker-compose up -d`.
 
 ## Contributing
 

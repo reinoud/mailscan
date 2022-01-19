@@ -1,7 +1,7 @@
 from .util import error
 from json import loads
 
-_config_file = "/rocketload.json"
+_config_file = "/mailscan.json"
 
 def get_config() -> dict:
     # Get and parse config file
@@ -42,6 +42,15 @@ def get_config() -> dict:
     if 'password' not in parsed['webdav']:
         raise Exception("Key 'webdav.password' not found in config.")
 
+    if 'ocr' not in parsed:
+        raise Exception("Key 'ocr' not found in config.")
+
+    if 'containername' not in parsed['ocr']:
+        raise Exception("Key 'ocr.containername' not found in config.")
+
+    if "containerport" not in parsed['ocr']:
+        raise Exception("Key 'ocr.containerport' not found in config.")
+
     return parsed
 
 def _get_file_content() -> str:
@@ -49,6 +58,6 @@ def _get_file_content() -> str:
         with open(_config_file, 'r') as content_file:
             content = content_file.read()
     except:
-        raise Exception("Rocketload config file at '%s' not found." % _config_file)
+        raise Exception("mailscan config file at '%s' not found." % _config_file)
     return content
     

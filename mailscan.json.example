@@ -1,0 +1,20 @@
+{
+  "pollInterval": 10,
+  "imap": {
+    "host": "mymailserver.example.com",
+    "user": "user@example.com",
+    "password": "supersecretpassword",
+    "folder": "INBOX",
+    "deletefetched": true
+  },
+  "webdav": {
+    "url": "https://mywebdavserver.example.com/remote.php/webdav",
+    "username": "webdavuser",
+    "password": "supersecretpassword"
+  },
+  "ocr": {
+    "containername": "ocrmypdf-webservice",
+    "containerport": 5000,
+    "scanname": "scan.pdf"
+  }
+}

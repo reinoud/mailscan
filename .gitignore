@@ -2,3 +2,5 @@ venv
 *.egg-info
 .vscode
 *.pyc
+.idea
+mailscan.json

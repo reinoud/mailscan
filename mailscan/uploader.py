@@ -3,7 +3,7 @@ import os
 from urllib.parse import urljoin, urlparse, urlunparse, ParseResult
 from .util import error
 
-def upload(conf: dict, attachements: dict) -> None:
+def upload(conf: dict, attachements: list) -> None:
     url = conf['webdav']['url']
     auth = (conf['webdav']['username'], conf['webdav']['password'])
 
@@ -12,12 +12,23 @@ def upload(conf: dict, attachements: dict) -> None:
             # Prepare request
             parsed = urlparse(url)
             path = os.path.join(parsed.path, att['filename'])
-            newUrl = ParseResult(parsed.scheme, parsed.netloc, path, parsed.params, parsed.query, parsed.fragment)
+            try:
+                newUrl = ParseResult(parsed.scheme, parsed.netloc, path, parsed.params, parsed.query, parsed.fragment)
+            except Exception as e:
+                print(f'problem with Parseresult : {e}')
+
             finalUrl = urlunparse(newUrl)
-            file = open(att['path'])
+            print(f'finalURL is {finalUrl}')
+            try:
+                file = open(att['path'], 'rb')
+            except Exception as e:
+                print(f'problem opening file: {e}')
 
             # Upload file
-            resp = requests.put(url=finalUrl, data=file, auth=auth)
+            try:
+                resp = requests.put(url=finalUrl, data=file, auth=auth)
+            except Exception as e:
+                print(f'exception during upload: {e}')
 
             if not resp.ok:
                 error("HTTP Failure while uploading files to WebDav server: HTTP Status Code %i" % resp.status_code)

@@ -5,7 +5,7 @@ from email.message import EmailMessage
 from email import policy
 import pprint, email, os
 
-storage_dir = '/tmp/rocketload/'
+storage_dir = '/tmp/mailscan/'
 
 def fetch_attachements(conf: dict) -> list:
     mails = _fetch_mails(conf)

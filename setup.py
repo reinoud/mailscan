@@ -1,12 +1,12 @@
 from setuptools import setup
 
 setup(
-    name = 'rocketload',
+    name = 'mailscan',
     version = '0.1.0',
-    packages = ['rocketload'],
+    packages = ['mailscan'],
     entry_points = {
         'console_scripts': [
-            'rocketload = rocketload.__main__:main'
+            'mailscan = mailscan.__main__:main'
         ]
     })
 
