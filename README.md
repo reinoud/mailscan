@@ -40,7 +40,7 @@ The configuration cosist of a JSON file called `mailscan.json`. It has following
 **`ocr`**: ocr configuration  
 **`ocr.containername`**: name of the service in `docker-compose.yml`  
 **`ocr.containerport`**: port of the service in `docker-compose.yml`
-**`ocr.scanname`**: static name from your scanner; this will be converted to a name with a timestamp
+**`ocr.scanname`**: static name from your scanner. this will be converted to a name with a timestamp
 
 
 Example of full configuration:
@@ -52,7 +52,7 @@ Example of full configuration:
         "host": "imap.gmail.com",
         "user": "john.doe@gmail.com",
         "password": "secretpassword",
-	    "folder": "rocketload_mails",
+	"folder": "INBOX",
         "deletefetched": true
     },
     "webdav": {
