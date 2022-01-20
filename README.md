@@ -69,6 +69,42 @@ Example of full configuration:
 
 ```
 
+## Make it a systemd-service
+
+If you want this to run on a Linux server somewhere, why not make it a systemd service.
+prerequisites: make sure Docker and docker-compose are installed
+
+create a file `/etc/systemd/system/mailscan.service` like this:
+
+```
+[Unit]
+Description=mailscan and ocrmypdf in Docker-compose (/srv/ocrmypdf)
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+WorkingDirectory=/srv/ocrmypdf
+ExecStart=/usr/local/bin/docker-compose -f /srv/ocrmypdf/docker-compose.yml up
+ExecStop=/usr/local/bin/docker-compose -f /srv/ocrmypdf/docker-compose.yml stop
+
+[Install]
+WantedBy=multi-user.target
+```
+(assuming everything is in `/srv/ocrmypdf`)
+
+issue these commands:
+
+`systemctl daemon-reload`
+
+`systemctl enable mailscan.service`
+
+`systemctl start mailscan.service`
+
+
+logfile can be inspected with 
+
+`journalctl -u mailscan.service -f`
 
 ## Contributing
 
