@@ -3,7 +3,7 @@ version: '3.5'
 services:
   mailscan:
     restart: always
-    image: mailscan
+    image: reinoud/mailscan
     volumes:
       - ./mailscan.json:/mailscan.json
     networks:
