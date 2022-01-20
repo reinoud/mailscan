@@ -32,6 +32,6 @@ def ocr_attachments(conf, attachments) -> list:
             date = datetime.datetime.now()
             filename = f'scan_{date:%Y%m%d}_{date:%H%M%S}.pdf'
         att_files.append({'filename': filename,
-                      'path': path})
+                          'path': path})
 
     return att_files

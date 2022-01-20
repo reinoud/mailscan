@@ -63,8 +63,15 @@ def _get_attachements(mail) -> list:
 
     return atts
 
+
+def decode_mime_words(s):
+    return u''.join(
+        word.decode(encoding or 'utf8') if isinstance(word, bytes) else word
+        for word, encoding in email.header.decode_header(s))
+
+
 def _get_attachement_files(attachement: object) -> list:
-        filename = attachement.get_filename()
+        filename = decode_mime_words(attachement.get_filename())
         path = os.path.join(storage_dir, filename + '_' + uuid4().hex)
 
         if not os.path.isfile(path):
