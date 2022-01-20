@@ -15,6 +15,8 @@ On a machine that has a recent version of Docker installed (including docker com
 - start the proces with `docker-compose up`
 - you can make it a systemd service
 
+There is no need to build the docker image; a pre-built will be pulled. Unless you want to change any functionality, only `docker-compose.yml` and `mailscan.json` are needed
+
 Note: this can be any machine, as long as it can reach the mailbox and the webdav server.
 
 
