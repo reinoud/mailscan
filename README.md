@@ -4,8 +4,9 @@ Mailscan is an application built with 2 Dockers to automate ocr-ing pdfs (presum
 
 Basically it is a combination of [Rocketload](https://gitlab.com/aagreb/rocketload/-/tree/master/rocketload), extended with a module to send files to a [ocrmypdf](https://github.com/ocrmypdf/OCRmyPDF) docker to ocr them. After this, the file is uploaded to a webdav server.
 
-The purpose of this is to automate scanning paper mail: the scanner has an email address in the adresbook that where the (pdf) scans are sent. 
+The purpose of this is to automate scanning paper mail: the scanner has an email address in the adresbook where the (pdf) scans are sent. 
 The application fetches mail from this addres (and deletes them), and uploads the ocr'ed scans to a webdavserver, so they can be indexed.
+
 ## Installation
 
 On a machine that has a recent version of Docker installed (including docker compose):
